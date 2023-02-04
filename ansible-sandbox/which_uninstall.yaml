@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: check location of tree command
+    command: "which tree"
+    register: which_output
+  - name: uninstall tree
+    package:
+        name: tree
+        state: absent
+    when: which_output.rc == 0
